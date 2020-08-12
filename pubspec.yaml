@@ -1,0 +1,19 @@
+name: o_color_picker
+description: Simple and fast 2-step color picker, which supports shades and colors customization.
+version: 0.1.0
+homepage: https://github.com/owczaro/o_color_picker
+issue_tracker: https://github.com/owczaro/o_color_picker/issues
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^1.2.3
+
+dev_dependencies:
+  effective_dart: ^1.2.0
+  flutter_test:
+    sdk: flutter
