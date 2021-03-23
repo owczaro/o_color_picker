@@ -28,7 +28,7 @@ class OColorBox extends StatelessWidget {
     required this.size,
     this.onPressed,
     this.child,
-  })  : super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => GestureDetector(
