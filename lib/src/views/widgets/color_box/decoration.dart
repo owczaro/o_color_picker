@@ -6,10 +6,10 @@ import 'border.dart';
 /// Decoration of [OColorBox]
 class OColorBoxDecoration extends Equatable {
   /// Background color
-  final Color color;
+  final Color? color;
 
   /// Border settings
-  final OColorBoxBorder border;
+  final OColorBoxBorder? border;
 
   /// Creates an instance of [OColorBoxDecoration]
   const OColorBoxDecoration({this.color, this.border});
@@ -22,5 +22,5 @@ class OColorBoxDecoration extends Equatable {
       );
 
   @override
-  List<Object> get props => [color, border];
+  List<Object?> get props => [color, border];
 }

@@ -16,7 +16,7 @@ import '../../services/color_provider.dart';
 /// ```
 class OColorPicker extends StatefulWidget {
   /// Currently selected color of given part of an app - e.g. app's background.
-  final Color selectedColor;
+  final Color? selectedColor;
 
   /// Main palette of colors.
   /// By default you can use [primaryColorsPalette] or [accentColorsPalette]
@@ -31,7 +31,7 @@ class OColorPicker extends StatefulWidget {
 
   ///  On color change callback.
   ///  E.g. save somewhere selected color and pop Navigator.
-  final ValueChanged<Color> onColorChange;
+  final ValueChanged<Color>? onColorChange;
 
   /// Space between tiles of color picker.
   final double spacing;
@@ -44,14 +44,14 @@ class OColorPicker extends StatefulWidget {
 
   /// Creates an instance of [OColorPicker]
   const OColorPicker({
-    Key key,
-    this.colors,
-    @required this.selectedColor,
-    @required this.onColorChange,
+    Key? key,
+    this.colors = primaryColorsPalette,
+    required this.selectedColor,
+    required this.onColorChange,
     this.excludedColors = const [],
     this.spacing = 9.0,
     this.boxSize = const Size(40.0, 40.0),
-    this.boxBorder,
+    this.boxBorder = const OColorBoxBorder(),
   }) : super(key: key);
 
   @override
@@ -59,9 +59,10 @@ class OColorPicker extends StatefulWidget {
 }
 
 class _OColorPickerState extends State<OColorPicker> {
-  List<Color> currentPalette;
-  ColorSwatch primaryColorOfSelectedColor;
-  bool isMainScreen;
+  List<Color>? currentPalette;
+  List<ColorSwatch>? currentPrimaryColorsPalette = primaryColorsPalette;
+  ColorSwatch? primaryColorOfSelectedColor;
+  bool isMainScreen = true;
 
   @override
   void initState() {
@@ -70,12 +71,12 @@ class _OColorPickerState extends State<OColorPicker> {
   }
 
   void _initSelectedValue() => setState(() {
-        currentPalette = OColorProvider.getPrimaryColors(
+        currentPrimaryColorsPalette = OColorProvider.getPrimaryColors(
           colors: widget.colors,
           excludedShades: widget.excludedColors,
         );
         primaryColorOfSelectedColor = OColorProvider.getPrimaryFromShade(
-          primaryColors: currentPalette,
+          primaryColors: currentPrimaryColorsPalette,
           shade: widget.selectedColor,
         );
         isMainScreen = true;
@@ -102,8 +103,10 @@ class _OColorPickerState extends State<OColorPicker> {
   List<Widget> _screen() => <Widget>[
         if (!isMainScreen) ...{
           _backIcon(),
+          ..._getColoredBoxes(),
+        } else ...{
+          ..._getPrimaryColoredBoxes(),
         },
-        ..._getColoredBoxes(),
       ];
 
   IconButton _backIcon() => IconButton(
@@ -115,24 +118,36 @@ class _OColorPickerState extends State<OColorPicker> {
   void _onBack() => _initSelectedValue();
 
   List<Widget> _getColoredBoxes() => <Widget>[
-        for (var color in currentPalette) ...{
+        for (var color in currentPalette!) ...{
           OColorBox(
             decoration: OColorBoxDecoration(
               color: color,
               border: widget.boxBorder,
             ),
             size: widget.boxSize,
-            onPressed: () => isMainScreen
-                ? _onPrimaryColorSelected(color)
-                : _onShadeColorSelected(color),
+            onPressed: () => _onShadeColorSelected(color),
             child: _icon(color),
           ),
         }
       ];
 
-  Icon _icon(Color color) => (isMainScreen
+  List<Widget> _getPrimaryColoredBoxes() => <Widget>[
+        for (var color in currentPrimaryColorsPalette!) ...{
+          OColorBox(
+            decoration: OColorBoxDecoration(
+              color: color,
+              border: widget.boxBorder,
+            ),
+            size: widget.boxSize,
+            onPressed: () => _onPrimaryColorSelected(color),
+            child: _icon(color),
+          ),
+        }
+      ];
+
+  Icon? _icon(Color color) => (isMainScreen
           ? primaryColorOfSelectedColor?.value == color.value
-          : widget.selectedColor.value == color.value)
+          : widget.selectedColor?.value == color.value)
       ? Icon(
           Icons.check,
           color: _iconColor(color),
@@ -150,7 +165,7 @@ class _OColorPickerState extends State<OColorPicker> {
       excludedShades: widget.excludedColors,
     );
 
-    if (_shadeColors?.length == 1) {
+    if (_shadeColors!.length == 1) {
       _onShadeColorSelected(_shadeColors.first);
       return null;
     }
@@ -161,5 +176,5 @@ class _OColorPickerState extends State<OColorPicker> {
     });
   }
 
-  void _onShadeColorSelected(Color color) => widget?.onColorChange(color);
+  void _onShadeColorSelected(Color color) => widget.onColorChange!(color);
 }

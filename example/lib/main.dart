@@ -21,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Color selectedColor = Colors.lightGreen[300];
+  Color? selectedColor = Colors.lightGreen[300];
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +30,34 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FlatButton(
-              color: selectedColor,
-              textColor: Colors.black,
-              child: Text('Change the color of the button'),
+            TextButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (var states) => selectedColor!,
+              )),
+              child: Text(
+                'Change the color of the button',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               onPressed: () => showDialog<void>(
                 context: context,
                 builder: (_) => Material(
-                  child: OColorPicker(
-                    selectedColor: selectedColor,
-                    colors: primaryColorsPalette,
-                    onColorChange: (color) {
-                      setState(() {
-                        selectedColor = color;
-                      });
-                      Navigator.of(context).pop();
-                    },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      OColorPicker(
+                        selectedColor: selectedColor,
+                        colors: primaryColorsPalette,
+                        onColorChange: (color) {
+                          setState(() {
+                            selectedColor = color;
+                          });
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),

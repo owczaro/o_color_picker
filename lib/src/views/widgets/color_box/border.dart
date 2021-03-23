@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// Border of [OColorBox]
 class OColorBoxBorder extends Equatable {
   /// Border color
-  final Color color;
+  final Color? color;
 
   /// Border width
   final double width;
@@ -20,17 +20,17 @@ class OColorBoxBorder extends Equatable {
   });
 
   /// Retrieves [Border] depends on border color
-  Border get border => color == null
+  Border? get border => color == null
       ? null
       : Border.all(
-          color: color,
+          color: color!,
           width: width,
         );
 
   /// Retrieves [BorderRadius] depends on border color
-  BorderRadius get borderRadius =>
+  BorderRadius? get borderRadius =>
       color == null ? null : BorderRadius.circular(radius);
 
   @override
-  List<Object> get props => [color, width, radius];
+  List<Object?> get props => [color, width, radius];
 }

@@ -5,11 +5,11 @@ import '../data/colors.dart';
 /// and removes particular colors from provided ones.
 class OColorProvider {
   /// Provides colors for 1st step
-  static List<ColorSwatch> getPrimaryColors({
-    @required List<ColorSwatch> colors,
-    List<Color> excludedShades = const [],
+  static List<ColorSwatch>? getPrimaryColors({
+    List<ColorSwatch>? colors = primaryColorsPalette,
+    List<Color?> excludedShades = const [],
   }) {
-    var _palette = List<ColorSwatch>.from(colors ?? primaryColorsPalette);
+    var _palette = List<ColorSwatch>.from(colors ?? []);
     _removeMainColorIfAllShadesAreExcluded(_palette, excludedShades);
 
     return _palette;
@@ -17,39 +17,38 @@ class OColorProvider {
 
   static void _removeMainColorIfAllShadesAreExcluded(
     List<ColorSwatch> _palette,
-    List<Color> excludedShades,
+    List<Color?> excludedShades,
   ) {
     _palette.removeWhere((element) => getColorShades(
           color: element,
           excludedShades: excludedShades,
-        ).isEmpty);
+        )!
+            .isEmpty);
   }
 
   /// Provides colors for 2nd step
-  static List<Color> getColorShades({
-    @required ColorSwatch color,
-    List<Color> excludedShades = const [],
+  static List<Color>? getColorShades({
+    ColorSwatch? color,
+    List<Color?> excludedShades = const [],
   }) {
     if (color == null) {
       return <Color>[];
     }
     final generatedColorList =
-        List<Color>.generate(10, (i) => color[100 * i++]);
+        List<Color?>.generate(10, (i) => color[100 * i++]);
 
-    var _shades = <Color>[color[50], ...generatedColorList];
-    _shades.removeWhere((element) => element?.runtimeType != Color);
+    var _shades = <Color?>[color[50], ...generatedColorList];
+    _shades.removeWhere((element) => element.runtimeType != Color);
 
-    _shades = _removeColorsFromPalette(
+    return _removeColorsFromPalette(
       palette: _shades,
       colorsToRemove: excludedShades,
     );
-
-    return _shades;
   }
 
   static List<Color> _removeColorsFromPalette({
-    @required List<Color> palette,
-    @required List<Color> colorsToRemove,
+    required List<Color?> palette,
+    required List<Color?> colorsToRemove,
   }) {
     var newPalette = List<Color>.from(palette);
     newPalette.removeWhere((color) => colorsToRemove.contains(color));
@@ -58,9 +57,9 @@ class OColorProvider {
   }
 
   /// Searches main (from 1st step) color from which given shade has been made.
-  static ColorSwatch getPrimaryFromShade({
-    @required List<Color> primaryColors,
-    @required Color shade,
+  static ColorSwatch? getPrimaryFromShade({
+    List<ColorSwatch>? primaryColors,
+    Color? shade,
   }) {
     if (primaryColors == null || shade == null) {
       return null;
@@ -76,10 +75,11 @@ class OColorProvider {
   }
 
   static bool _containsSelectedColor({
-    @required ColorSwatch primaryColor,
-    @required Color shade,
+    required ColorSwatch primaryColor,
+    Color? shade,
   }) =>
       getColorShades(
         color: primaryColor,
-      ).contains(shade);
+      )!
+          .contains(shade);
 }
