@@ -16,21 +16,19 @@ class OColorBox extends StatelessWidget {
   final Size size;
 
   /// Content of the widget
-  final Widget child;
+  final Widget? child;
 
   /// onTap callback
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   /// Creates an instance of [OColorBox]
   const OColorBox({
-    Key key,
-    this.decoration,
-    this.size,
+    Key? key,
+    required this.decoration,
+    required this.size,
     this.onPressed,
     this.child,
-  })  : assert(decoration != null),
-        assert(size != null),
-        super(key: key);
+  })  : super(key: key);
 
   @override
   Widget build(BuildContext context) => GestureDetector(

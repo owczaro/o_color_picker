@@ -14,7 +14,8 @@ void main() {
   group('[Services] OColorProvider.getPrimaryColors', () {
     test('Default palette', () {
       final result = OColorProvider.getPrimaryColors(colors: null);
-      expect(result?.length, greaterThan(0));
+      expect(result, isList);
+      expect(result, hasLength(0));
     });
 
     test('Without exclusion', () {

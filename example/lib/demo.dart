@@ -22,7 +22,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Color selectedColor = Colors.lightGreen[300];
+  Color? selectedColor = Colors.lightGreen[300];
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +40,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.amber,
                 child: Text('Change color'),
               ),
-              popupContent: OColorPicker(
-                selectedColor: selectedColor,
-                colors: primaryColorsPalette,
-                onColorChange: (color) {
-                  setState(() {
-                    selectedColor = color;
-                  });
-                  Navigator.of(context).pop();
-                },
+              popupContent: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  OColorPicker(
+                    selectedColor: selectedColor,
+                    colors: primaryColorsPalette,
+                    onColorChange: (color) {
+                      setState(() {
+                        selectedColor = color;
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
               ),
+
+              ///,
             ),
           ],
         ),

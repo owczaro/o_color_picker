@@ -7,7 +7,7 @@ import 'package:o_color_picker/o_color_picker.dart';
 void main() {
   group('[Views/Widgets/ColorBox] OColorBoxDecoration getBoxDecoration', () {
     testWidgets('Returns default theme background color', (tester) async {
-      BoxDecoration boxDecoration;
+      var boxDecoration = BoxDecoration();
       final bgColor = Colors.blue;
       await tester.pumpWidget(
         MaterialApp(
@@ -31,7 +31,7 @@ void main() {
     });
 
     testWidgets('Returns given color', (tester) async {
-      BoxDecoration boxDecoration;
+      var boxDecoration = BoxDecoration();
       final bgColor = Colors.blue;
       final givenColor = Colors.red;
       await tester.pumpWidget(
@@ -57,7 +57,7 @@ void main() {
     });
 
     testWidgets('Returns proper border', (tester) async {
-      BoxDecoration boxDecoration;
+      var boxDecoration = BoxDecoration();
       final boxBorder = OColorBoxBorder(color: Colors.green);
       final bgColor = Colors.blue;
       await tester.pumpWidget(

@@ -18,26 +18,26 @@ void main() {
 
     test('Returns proper border color, when color is set', () {
       final boxBorder = OColorBoxBorder(color: Colors.blue);
-      expect(boxBorder.border.top.color, equals(Colors.blue));
-      expect(boxBorder.border.right.color, equals(Colors.blue));
-      expect(boxBorder.border.bottom.color, equals(Colors.blue));
-      expect(boxBorder.border.left.color, equals(Colors.blue));
+      expect(boxBorder.border?.top.color, equals(Colors.blue));
+      expect(boxBorder.border?.right.color, equals(Colors.blue));
+      expect(boxBorder.border?.bottom.color, equals(Colors.blue));
+      expect(boxBorder.border?.left.color, equals(Colors.blue));
     });
 
     test('Returns proper border width by default (= 2)', () {
       final boxBorder = OColorBoxBorder(color: Colors.blue);
-      expect(boxBorder.border.top.width, equals(2));
-      expect(boxBorder.border.right.width, equals(2));
-      expect(boxBorder.border.bottom.width, equals(2));
-      expect(boxBorder.border.left.width, equals(2));
+      expect(boxBorder.border?.top.width, equals(2));
+      expect(boxBorder.border?.right.width, equals(2));
+      expect(boxBorder.border?.bottom.width, equals(2));
+      expect(boxBorder.border?.left.width, equals(2));
     });
 
     test('Returns proper border width (= 10)', () {
       final boxBorder = OColorBoxBorder(color: Colors.blue, width: 10.0);
-      expect(boxBorder.border.top.width, equals(10));
-      expect(boxBorder.border.right.width, equals(10));
-      expect(boxBorder.border.bottom.width, equals(10));
-      expect(boxBorder.border.left.width, equals(10));
+      expect(boxBorder.border?.top.width, equals(10));
+      expect(boxBorder.border?.right.width, equals(10));
+      expect(boxBorder.border?.bottom.width, equals(10));
+      expect(boxBorder.border?.left.width, equals(10));
     });
   });
 
