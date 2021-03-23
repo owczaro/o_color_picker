@@ -1,3 +1,7 @@
+## [1.0.1] - 23th of March 2021
+
+- format files using `dartfmt -w .`
+
 ## [1.0.0] - 23th of March 2021
 
 - Null safety support
