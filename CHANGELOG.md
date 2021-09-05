@@ -1,3 +1,7 @@
+## [1.0.2] - 5th of September 2021
+
+- Updating packages' versions
+
 ## [1.0.1] - 23th of March 2021
 
 - format files using `dartfmt -w .`

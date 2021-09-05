@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   o_color_picker:
     path: ../
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
   o_popup: ^1.0.0
 
 flutter:
